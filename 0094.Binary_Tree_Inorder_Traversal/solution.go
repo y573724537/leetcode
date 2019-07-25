@@ -13,26 +13,25 @@ type TreeNode struct {
 	Right *TreeNode
 }
 
-func preorderTraversal(root *TreeNode) []int {
+func inorderTraversal(root *TreeNode) []int {
 	if root == nil {
 		return nil
 	}
 
 	sequence := []int{}
+	cur := root
 	stack := list.New()
-	stack.PushBack(root)
 
-	for stack.Len() != 0 {
+	for cur != nil || stack.Len() != 0 {
+		for cur != nil {
+			stack.PushBack(cur)
+			cur = cur.Left
+		}
+
 		node, _ := stack.Remove(stack.Back()).(*TreeNode)
 		sequence = append(sequence, node.Val)
 
-		if node.Right != nil {
-			stack.PushBack(node.Right)
-		}
-
-		if node.Left != nil {
-			stack.PushBack(node.Left)
-		}
+		cur = node.Right
 	}
 
 	return sequence
