@@ -1,15 +1,15 @@
 package solution
 
 func twoSum(nums []int, target int) []int {
-	dict := map[int]int{}
+	records := make(map[int]int, len(nums))
 
 	for i := 0; i < len(nums); i++ {
-		anothor := target - nums[i]
-		if j, ok := dict[anothor]; ok {
-			return []int{j, i}
+		mate := target - nums[i]
+		if mateIdx, ok := records[mate]; ok {
+			return []int{mateIdx, i}
 		}
 
-		dict[nums[i]] = i
+		records[nums[i]] = i
 	}
 
 	return nil

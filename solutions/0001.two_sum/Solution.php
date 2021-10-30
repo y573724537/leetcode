@@ -8,15 +8,15 @@ class Solution {
      * @return Integer[]
      */
     function twoSum($nums, $target) {
-        $dict = array();
+        $records = array();
 
         for ($i = 0; $i < count($nums); $i++) {
-            $another = $target - $nums[$i];
-            if (isset($dict[$another])) {
-                return array($dict[$another], $i);
+            $mate = $target - $nums[$i];
+            if (isset($records[$mate])) {
+                return array($records[$mate], $i);
             }
 
-            $dict[$nums[$i]] = $i;
+            $records[$nums[$i]] = $i;
         }
 
         return null;
