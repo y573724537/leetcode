@@ -17,7 +17,7 @@ func mergeSort(arr []int, low int, high int) {
 		return
 	}
 
-	mid := (low + high) / 2
+	mid := low + (high-low)>>1
 	mergeSort(arr, low, mid)
 	mergeSort(arr, mid+1, high)
 	merge(arr, low, mid, high)

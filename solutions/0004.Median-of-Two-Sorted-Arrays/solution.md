@@ -126,3 +126,28 @@ func findKthElement(nums1 []int, nums2 []int, targetIdx int) float64 {
 ### 二分查找
 根据上面的优化，将问题退化为查找问题，即：寻找两个有序数组中的第K小数字；若想将查找问题的时间复杂度优化为log级别，可以使用二分查找。
 
+nums1[mid1-1] <= nums2[mid2] && nums2[mid2-1] <= nums1[mid1]
+如果 nums2[mid2] < nums1[mid1 -1]，说明mid1太大了；
+如果 nums1[mid1] < nums2[mid2 - 1]，说明mid1太小了；
+
+```go
+func findMedianSortedArrays(nums1 []int, nums2 []int) float64 {
+    if len(nums2) < len(nums1) {
+        findMedianSortedArrays(nums2, nums1)
+    }
+
+    mid := (len(nums1) + len(nums2)) / 2
+    mid1, mid2 := 0, 0
+    low, high := 0, len(nums1) - 1
+    for low < high {
+        mid1 = low + (high - low) / 2
+        mid2 = mid - mid1
+
+        if nums2[mid2] < nums1[mid1 - 1] {
+            high = mid1 - 1
+        } else if nums1[mid1] < nums2[mid2 - 1] {
+            low = mid1 + 1
+        }
+    }
+}
+```
