@@ -5,7 +5,7 @@ import (
 )
 
 func BubbleSort0(arr []int) {
-	if arr == nil || len(arr) < 2 {
+	if len(arr) < 2 {
 		return
 	}
 
@@ -19,7 +19,7 @@ func BubbleSort0(arr []int) {
 }
 
 func BubbleSort1(nums []int) {
-	if nums == nil || len(nums) < 2 {
+	if len(nums) < 2 {
 		return
 	}
 
@@ -35,7 +35,7 @@ func BubbleSort1(nums []int) {
 }
 
 func BubbleSort2(nums []int) {
-	if nums == nil || len(nums) < 2 {
+	if len(nums) < 2 {
 		return
 	}
 

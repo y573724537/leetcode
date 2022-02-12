@@ -7,7 +7,7 @@ import (
 )
 
 func QuickSort0(arr []int) {
-	if arr == nil || len(arr) < 2 {
+	if len(arr) < 2 {
 		return
 	}
 
