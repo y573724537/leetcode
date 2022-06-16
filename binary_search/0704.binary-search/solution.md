@@ -22,7 +22,7 @@ func search(nums []int, target int) int {
 }
 ```
 这里由于初始化high := len(nums) - 1，决定了以下几个事情
-* 所搜的区间为[low, high]
+* 所搜的区间为[low, high]，从而推断只有一个元素的情况为[0, 0]
 * for low <= high {}
 * low = mid + 1
 * high = mid - 1

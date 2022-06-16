@@ -5,39 +5,38 @@ import (
 )
 
 func HeapSort(arr []int) {
-	if len(arr) < 2 {
+	n := len(arr)
+	if n < 2 {
 		return
 	}
 
-	n := len(arr)
 	for i := n/2 - 1; 0 <= i; i-- {
-		percolateDown(arr, n, i)
+		heapify(arr, n, i)
 	}
 
-	for i := 0; i < n-1; i++ {
+	for i := 0; i < n; i++ {
 		arr[0], arr[n-1-i] = arr[n-1-i], arr[0]
-		percolateDown(arr, n-1-i, 0)
+		heapify(arr, n-1-i, 0)
 	}
 }
 
-func percolateDown(arr []int, length int, i int) {
-	if length <= 2*i+1 {
+func heapify(arr []int, sentinel, i int) {
+	if sentinel <= 2*i+1 {
 		return
 	}
 
 	maxPos := 2*i + 1
-	maxVal := arr[maxPos]
 
-	if 2*i+2 < length && maxVal < arr[2*i+2] {
-		maxPos = 2*i + 2
-		maxVal = arr[maxPos]
+	if maxPos+1 < sentinel && arr[maxPos] < arr[2*i+2] {
+		maxPos = maxPos + 1
 	}
 
-	if arr[i] < maxVal {
-		arr[i], arr[maxPos] = arr[maxPos], arr[i]
+	if arr[maxPos] <= arr[i] {
+		return
 	}
 
-	percolateDown(arr, length, maxPos)
+	arr[i], arr[maxPos] = arr[maxPos], arr[i]
+	heapify(arr, sentinel, maxPos)
 }
 
 func main() {
