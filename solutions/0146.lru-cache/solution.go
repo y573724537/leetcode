@@ -46,16 +46,11 @@ func (this *LRUCache) Put(key int, value int) {
 		return
 	}
 
-	if len(this.cacheMap) < this.capacity {
-		this.cacheMap[key] = this.cacheList.PushFront(KV{
-			Key:   key,
-			Value: value,
-		})
-		return
+	if len(this.cacheMap) == this.capacity {
+		kv, _ := this.cacheList.Remove(this.cacheList.Back()).(KV)
+		delete(this.cacheMap, kv.Key)
 	}
 
-	kv, _ := this.cacheList.Remove(this.cacheList.Back()).(KV)
-	delete(this.cacheMap, kv.Key)
 	this.cacheMap[key] = this.cacheList.PushFront(KV{
 		Key:   key,
 		Value: value,
