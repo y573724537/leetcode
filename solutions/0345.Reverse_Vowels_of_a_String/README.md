@@ -2,7 +2,9 @@
 
 ## Description
 
-Write a function that takes a string as input and reverse only the vowels of a string.
+Given a string s, reverse only all the vowels in the string and return it.
+
+The vowels are 'a', 'e', 'i', 'o', and 'u', and they can appear in both cases.
 
 Example 1:
 
@@ -18,5 +20,7 @@ Input: "leetcode"
 Output: "leotcede"
 ```
 
-Note:
-The vowels does not include the letter "y".
+Constraints:
+
+* 1 <= s.length <= 3 * 10<sup>5</sup>
+* s consist of printable ASCII characters.
