@@ -32,5 +32,5 @@ Output: 2
 
 ### Constraints:
 * n == height.length
-* 2 <= n <= 105
-* 0 <= height[i] <= 104
+* 2 <= n <= 10<sup>5</sup>
+* 0 <= height[i] <= 10<sup>4</sup>
