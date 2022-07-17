@@ -15,37 +15,69 @@ type TreeNode struct {
 
 func levelOrder(root *TreeNode) [][]int {
 	if root == nil {
-		return nil
+		return [][]int{}
 	}
 
-	levels := [][]int{[]int{}}
+	levels := [][]int{}
 	queue := list.New()
 	queue.PushFront(root)
-	sentinel := root
-	nSentinel := sentinel
+	curLevel := []int{}
+	curEnd := root
+	var nextEnd *TreeNode
 
 	for queue.Len() != 0 {
 		node, _ := queue.Remove(queue.Back()).(*TreeNode)
-
-		level := levels[len(levels)-1]
-		level = append(level, node.Val)
-		levels[len(levels)-1] = level
+		curLevel = append(curLevel, node.Val)
 
 		if node.Left != nil {
 			queue.PushFront(node.Left)
-			sentinel = node.Left
+			nextEnd = node.Left
 		}
 
 		if node.Right != nil {
 			queue.PushFront(node.Right)
-			sentinel = node.Right
+			nextEnd = node.Right
 		}
 
-		if node == nSentinel {
-			levels = append(levels, []int{})
-			nSentinel = sentinel
+		if node == curEnd {
+			levels = append(levels, curLevel)
+			curLevel = []int{}
+			curEnd = nextEnd
 		}
 	}
 
-	return levels[:len(levels)-1]
+	return levels
+}
+
+func levelOrder1(root *TreeNode) [][]int {
+	if root == nil {
+		return [][]int{}
+	}
+
+	levels := [][]int{}
+	queue := list.New()
+	queue.PushFront(root)
+
+	for queue.Len() != 0 {
+		q := queue
+		queue = list.New()
+		level := []int{}
+
+		for q.Len() != 0 {
+			cur, _ := q.Remove(q.Back()).(*TreeNode)
+			level = append(level, cur.Val)
+
+			if cur.Left != nil {
+				queue.PushFront(cur.Left)
+			}
+
+			if cur.Right != nil {
+				queue.PushFront(cur.Right)
+			}
+		}
+
+		levels = append(levels, level)
+	}
+
+	return levels
 }

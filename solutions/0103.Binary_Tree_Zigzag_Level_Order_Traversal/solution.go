@@ -1,7 +1,8 @@
-package solution
+package main
 
 import (
 	"container/list"
+	"fmt"
 )
 
 /**
@@ -15,52 +16,61 @@ type TreeNode struct {
 
 func zigzagLevelOrder(root *TreeNode) [][]int {
 	if root == nil {
-		return nil
+		return [][]int{}
 	}
 
-	deque := list.New()
-	zigZag := [][]int{[]int{}}
-	deque.PushFront(root)
-	sentinel := root
-	nSentinel := sentinel
-	direction := true // from left to right
+	levels := [][]int{}
+	queue := list.New()
+	queue.PushFront(root)
 
-	for deque.Len() != 0 {
-		var node *TreeNode
+	for level := 0; queue.Len() != 0; level++ {
+		q := queue
+		queue = list.New()
+		curLevel := []int{}
 
-		node, _ = deque.Remove(deque.Back()).(*TreeNode)
-		if direction {
-			if node.Right != nil {
-				deque.PushFront(node.Right)
-				sentinel = node.Right
+		for q.Len() != 0 {
+			cur, _ := q.Remove(q.Back()).(*TreeNode)
+			curLevel = append(curLevel, cur.Val)
+
+			if cur.Left != nil {
+				queue.PushFront(cur.Left)
 			}
 
-			if node.Left != nil {
-				deque.PushFront(node.Left)
-				sentinel = node.Left
-			}
-		} else {
-			if node.Left != nil {
-				deque.PushFront(node.Left)
-				sentinel = node.Left
-			}
-
-			if node.Right != nil {
-				deque.PushFront(node.Right)
-				sentinel = node.Right
+			if cur.Right != nil {
+				queue.PushFront(cur.Right)
 			}
 		}
 
-		level := zigZag[len(zigZag)-1]
-		level = append(level, node.Val)
-		zigZag[len(zigZag)-1] = level
-
-		if node == nSentinel {
-			zigZag = append(zigZag, []int{})
-			nSentinel = sentinel
-			direction = !direction
+		if level%2 != 0 {
+			for i, j := 0, len(curLevel)-1; i < j; {
+				curLevel[i], curLevel[j] = curLevel[j], curLevel[i]
+				i++
+				j--
+			}
 		}
+
+		levels = append(levels, curLevel)
 	}
 
-	return zigZag[:len(zigZag)-1]
+	return levels
+}
+
+func main() {
+	root := &TreeNode{
+		Val: 3,
+		Left: &TreeNode{
+			Val: 9,
+		},
+		Right: &TreeNode{
+			Val: 20,
+			Left: &TreeNode{
+				Val: 15,
+			},
+			Right: &TreeNode{
+				Val: 7,
+			},
+		},
+	}
+
+	fmt.Printf("%v\n", zigzagLevelOrder(root))
 }

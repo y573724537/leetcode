@@ -45,6 +45,33 @@ func postorderTraversal(root *TreeNode) []int {
 	return sequence
 }
 
+func postorderTraversal1(root *TreeNode) []int {
+	if root == nil {
+		return []int{}
+	}
+
+	sequence := []int{}
+	stack := list.New()
+	stack.PushBack(root)
+	var cur *TreeNode
+	var last *TreeNode = root
+
+	for stack.Len() != 0 {
+		cur, _ = stack.Back().Value.(*TreeNode)
+		if cur.Left != nil && last != cur.Left && last != cur.Right {
+			stack.PushBack(cur.Left)
+		} else if cur.Right != nil && last != cur.Right {
+			stack.PushBack(cur.Right)
+		} else {
+			node, _ := stack.Remove(stack.Back()).(*TreeNode)
+			sequence = append(sequence, node.Val)
+			last = cur
+		}
+	}
+
+	return sequence
+}
+
 func main() {
 	t3 := &TreeNode{3, nil, nil}
 	t2 := &TreeNode{2, t3, nil}
